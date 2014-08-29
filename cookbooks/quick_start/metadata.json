@@ -1,0 +1,74 @@
+{
+  "license": "Apache 2.0",
+  "recipes": {
+    "quick_start": ""
+  },
+  "conflicting": {
+
+  },
+  "dependencies": {
+
+  },
+  "providing": {
+    "quick_start": [
+
+    ]
+  },
+  "long_description": "",
+  "description": "Example cookbook for quick_start wiki document",
+  "replacing": {
+
+  },
+  "platforms": {
+    "openbsd": [
+
+    ],
+    "debian": [
+
+    ],
+    "solaris": [
+
+    ],
+    "centos": [
+
+    ],
+    "fedora": [
+
+    ],
+    "macosx": [
+
+    ],
+    "freebsd": [
+
+    ],
+    "ubuntu": [
+
+    ],
+    "redhat": [
+
+    ]
+  },
+  "version": "0.7.0",
+  "maintainer": "Opscode, Inc.",
+  "recommendations": {
+
+  },
+  "name": "quick_start",
+  "maintainer_email": "cookbooks@opscode.com",
+  "attributes": {
+    "quick_start\/deep_thought": {
+      "required": false,
+      "default": "If a tree falls in the forest...",
+      "type": "string",
+      "recipes": [
+
+      ],
+      "multiple_values": false,
+      "display_name": "Quick Start Deep Thought",
+      "description": "A deep thought"
+    }
+  },
+  "suggestions": {
+
+  }
+}
