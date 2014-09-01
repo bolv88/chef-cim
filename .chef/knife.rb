@@ -6,3 +6,4 @@ validation_client_name   'chef-validator'
 validation_key           '/root/chef-cim/.chef/chef-validator.pem'
 chef_server_url          'https://server:443'
 syntax_check_cache_path  '/root/chef-cim/.chef/syntax_check_cache'
+cookbook_path [ '/root/chef-cim/cookbooks/']
