@@ -55,4 +55,23 @@ users_manage "staff" do
   data_bag "users"
 end
 
+#sudo
+#node.default['openssh']['server']['listen_address'] = '192.168.1.1'
+#node.default['openssh']['server']['port'] = '6222'
+#
+#node.default['openssh']['server']['permit_root_login'] = "no"
+#node.default['openssh']['server']['password_authentication'] = "no"
+
+
+node.default['authorization']['sudo']['passwordless'] = true
+node.default['authorization']['sudo']['groups'] = ['staff']
+
+include_recipe 'sudo'
+
+include_recipe 'ntp'
+#include_recipe 'ntp::undo'
+Chef::Log.info("before varnish")
+
+node.default['varnish']['backend_port'] = '80'
+include_recipe 'varnish'
 #hehe

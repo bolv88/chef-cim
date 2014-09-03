@@ -8,3 +8,8 @@ version          '0.1.1'
 
 depends "yum"
 depends "users"
+depends "openssh"
+depends "sudo"
+depends "ntp"
+depends "varnish"
+
