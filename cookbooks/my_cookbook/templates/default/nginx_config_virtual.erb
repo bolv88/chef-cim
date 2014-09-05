@@ -1,0 +1,14 @@
+server {
+  #listen <%= @listen_ip%>:80;
+  listen 8081;
+  server_name somname;
+
+  location / {
+    root html;
+    index index.html;
+  }
+  <%- @client_ips.each{|one_ip|%>
+    #<%= one_ip %>
+  <%- }%>
+}
+#

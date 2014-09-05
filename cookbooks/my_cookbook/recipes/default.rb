@@ -51,8 +51,7 @@ end
 include_recipe "users"
 users_manage "staff" do
   group_id 999
-  action [:remove, :create]
-  data_bag "users"
+  action [:create]
 end
 
 #sudo
@@ -68,10 +67,24 @@ node.default['authorization']['sudo']['groups'] = ['staff']
 
 include_recipe 'sudo'
 
-include_recipe 'ntp'
+#include_recipe 'ntp'
 #include_recipe 'ntp::undo'
 Chef::Log.info("before varnish")
 
-node.default['varnish']['backend_port'] = '80'
-include_recipe 'varnish'
-#hehe
+#node.default['varnish']['backend_port'] = '80'
+#include_recipe 'varnish'
+
+yum_package "nginx"
+include_recipe "my_cookbook::nginx_config"
+
+yum_package "haproxy"
+include_recipe "my_cookbook::haproxy_config"
+
+
+#node.default['haproxy']['httpchk'] = true
+#node.default['haproxy']['x_forwarded_for'] = true
+#node.default['haproxy']['app_server_role'] = "web_servers"
+#node.default['haproxy']['incoming_port'] = 80
+#node.default['haproxy']['member_port'] = 8081
+#include_recipe "haproxy::app_lb"
+

@@ -12,4 +12,6 @@ depends "openssh"
 depends "sudo"
 depends "ntp"
 depends "varnish"
+depends "nginx"
+depends "haproxy"
 
