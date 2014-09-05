@@ -33,3 +33,7 @@ bash "run_on_nginx_config_change" do
   action :nothing
 end
 
+#remote dir
+remote_directory "/etc/nginx/sites-enabled/" do
+  source "empty_dir"
+end

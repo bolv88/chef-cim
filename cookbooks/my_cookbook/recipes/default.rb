@@ -36,16 +36,7 @@ end
 #package "libcurl-devel"
 #yum_package "php54"
 
-#remote dir
-remote_directory "/tmp/111" do
-	files_backup 10
-	files_owner "root"
-	files_group "root"
-	files_mode 00644
-	owner "root"
-	group "root"
-	mode 00755
-end
+
 
 #users
 include_recipe "users"
