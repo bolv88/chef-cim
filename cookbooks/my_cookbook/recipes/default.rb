@@ -71,6 +71,7 @@ include_recipe "my_cookbook::nginx_config"
 yum_package "haproxy"
 include_recipe "my_cookbook::haproxy_config"
 
+include_recipe "my_cookbook::redis"
 
 #node.default['haproxy']['httpchk'] = true
 #node.default['haproxy']['x_forwarded_for'] = true
