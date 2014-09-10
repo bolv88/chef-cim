@@ -65,8 +65,8 @@ Chef::Log.info("before varnish")
 #node.default['varnish']['backend_port'] = '80'
 #include_recipe 'varnish'
 
-yum_package "nginx"
-include_recipe "my_cookbook::nginx_config"
+#yum_package "nginx"
+#include_recipe "my_cookbook::nginx_config"
 
 yum_package "haproxy"
 include_recipe "my_cookbook::haproxy_config"
