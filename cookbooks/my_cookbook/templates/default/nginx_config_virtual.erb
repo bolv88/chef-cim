@@ -1,14 +1,11 @@
 server {
-  #listen <%= @listen_ip%>:80;
-  listen 8081;
+listen <%= @listen_ip%>:<%= @listen_port%>;
+  #listen 8082;
   server_name somname;
 
   location / {
     root html;
     index index.html;
   }
-  <%- @client_ips.each{|one_ip|%>
-    #<%= one_ip %>
-  <%- }%>
 }
 #

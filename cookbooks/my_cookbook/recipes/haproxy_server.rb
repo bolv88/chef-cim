@@ -1,5 +1,12 @@
-ip_pre = "192."
-server_nodes = search(:node, "role:web_servers")
+include_recipe "yum"
+haproxy_package = yum_package "haproxy" do
+    action :nothing
+end
+haproxy_package.run_action(:install)
+
+ip_pre = node['my_cookbook']['inner_ip_pre']
+server_nodes = search(:node, "role:web_server")
+
 Chef::Log.info("ser nodes #{server_nodes}")
 client_ips = []
 server_nodes.each{|node|
@@ -8,11 +15,6 @@ server_nodes.each{|node|
 }
 
 Chef::Log.info("client ips #{client_ips}")
-
-bash "run_on_haproxy_config_change" do
-  code '/etc/init.d/haproxy reload'
-  action :nothing
-end
 
 template '/etc/haproxy/haproxy.cfg' do
   source "haproxy_config.erb"
@@ -23,9 +25,16 @@ template '/etc/haproxy/haproxy.cfg' do
     from: node['fqdn'],
 
     maxconn: 4000,
-    main_listenport: 80
 
+    main_listenport: 80
   )
-  notifies :run, 'bash[run_on_haproxy_config_change]'
+  notifies :run, 'execute[haproxy_config_change]'
 end
+
+execute "haproxy_config_change" do
+  command '/etc/init.d/haproxy reload'
+  action :nothing
+end
+
+enableService "/etc/init.d/haproxy"
 
