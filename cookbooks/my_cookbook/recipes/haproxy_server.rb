@@ -6,7 +6,6 @@ haproxy_package.run_action(:install)
 
 ip_pre = node['my_cookbook']['inner_ip_pre']
 server_nodes = search(:node, "role:web_server")
-
 Chef::Log.info("ser nodes #{server_nodes}")
 client_ips = []
 server_nodes.each{|node|

@@ -15,4 +15,4 @@ depends "varnish"
 depends "nginx"
 depends "haproxy"
 depends "redisio"
-
+depends "build-essential"
