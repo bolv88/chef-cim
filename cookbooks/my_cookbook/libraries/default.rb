@@ -17,7 +17,7 @@ class Chef::Recipe
     service_status = Mixlib::ShellOut.new("#{command_pre} status")
     service_status.run_command
 
-    return true if (service_status.stdout.index "running") != nil
+    return true if (service_status.stdout.index "running") != nil and (service_status.stdout.index "not running") == nil
 
     run_service = Mixlib::ShellOut.new("#{command_pre} start")
     run_service.run_command

@@ -77,3 +77,4 @@ template "/etc/sysconfig/iptables" do
     notifies :run, 'execute[iptables_change]'
 end
 
+enableService "/etc/init.d/iptables"
