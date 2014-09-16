@@ -8,7 +8,7 @@ port                           = 3306
 socket                         = /data0/mysql/mysql.sock
 
 [mysqld]
-
+bind-address = <%= @bind_address %>
 # GENERAL #
 user                           = mysql
 default-storage-engine         = InnoDB
@@ -57,4 +57,14 @@ log-error                      = /data0/mysql/mysql-error.log
 log-queries-not-using-indexes  = 1
 slow-query-log                 = 1
 slow-query-log-file            = /data0/mysql/mysql-slow.log
+
+#one file one table
+innodb_file_per_table = 1 
+server-id = <%= @server_id %>
+
+<%- if (defined? @binlog_dbs) and @binlog_dbs.count > 0 %>
+  <%- @binlog_dbs.each do |one_db|%>
+  binlog-do-db=<%= one_db%>
+  <%- end %>
+<%- end %>
 
