@@ -16,6 +16,8 @@ packages.each{|one|
   package1.run_action(:install)
 }
 
+chef_gem "mysql"
+
 #my.cnf
 ip_pre = node['my_cookbook']['inner_ip_pre']
 ip = getNodeIp node, ip_pre
@@ -28,6 +30,14 @@ execute "mysql_config_change" do
   action :nothing
 end
 
+execute "mysql_stop_and_rsync" do
+  command '/etc/init.d/mysql stop && rsync -alvz /var/lib/mysql/ /data0/mysql/' 
+  action :run
+  not_if "test -d /data0/mysql"
+end
+#  action :nothing
+#end.run_action(:run)
+
 template "/etc/my.cnf" do
   source "mysql.erb"
   variables(
@@ -36,18 +46,23 @@ template "/etc/my.cnf" do
     binlog_dbs: ['cim_public_user_0', 'cim_public_data_0']
   )
   notifies :run, 'execute[mysql_config_change]', :immediately
+  action :create
 end
 
-
-#start service
-enableService "/etc/init.d/mysql"
+ruby_block "config mysql" do
+  block do
+    #start service
+    ServiceLib.enableService "/etc/init.d/mysql"
+  end
+  action :create
+end
 
 #create database and users
 server_nodes = search(:node, "role:web_server")
 Chef::Log.info("ser nodes #{server_nodes}")
 client_ips = []
 server_nodes.each{|node|
-  ip = getNodeIp node, ip_pre
+  ip = ServiceLib.getNodeIp node, ip_pre
   client_ips << ip if ip.start_with? ip_pre
 }
 
@@ -60,7 +75,6 @@ connection_params = {
 }
 databases = ['cim_public_user_0', 'cim_public_data_0']
 
-chef_gem "mysql"
 
 #databases.each{|db_name|
 #  mysql_database db_name do
@@ -94,5 +108,4 @@ databases.each{|db_name|
     end
   }
 }
-
 
