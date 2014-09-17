@@ -55,7 +55,7 @@ defaults
     timeout server          1m
     timeout http-keep-alive 10s
     timeout check           10s
-    maxconn                 <%= @maxconn%>
+    maxconn     <%= @maxconn %>
     stats   uri     /haproxy-stats 
     stats auth cim120:haproxy-120
 
@@ -103,4 +103,28 @@ backend app
     #server  app3 127.0.0.1:5003 check
     #server  app4 127.0.0.1:5004 check
 
-##
+#cim svn
+defaults
+    mode                    tcp
+    log                     global
+    option                  tcplog
+    option                  dontlognull
+    option                  redispatch
+    retries                 3
+    timeout http-request    10s
+    timeout queue           1m
+    timeout connect         10s
+    timeout client          1m
+    timeout server          1m
+    timeout http-keep-alive 10s
+    timeout check           10s
+    maxconn                 <%= @maxconn%>
+frontend svn
+        bind :3690
+        mode tcp
+        default_backend             svn_back
+
+backend svn_back
+        mode tcp
+        server s1 10.162.212.6:3690
+

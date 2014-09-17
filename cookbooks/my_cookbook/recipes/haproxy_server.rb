@@ -1,18 +1,20 @@
+extend MyCookbook::Helpers
 include_recipe "yum"
 haproxy_package = yum_package "haproxy" do
     action :nothing
 end
 haproxy_package.run_action(:install)
 
-ip_pre = node['my_cookbook']['inner_ip_pre']
-server_nodes = search(:node, "role:web_server")
-Chef::Log.info("ser nodes #{server_nodes}")
-client_ips = []
-server_nodes.each{|node|
-  ip = getNodeIp node, ip_pre
-  client_ips << ip if ip.start_with? ip_pre
-}
-
+#ip_pre = node['my_cookbook']['inner_ip_pre']
+#server_nodes = search(:node, "role:web_server")
+#Chef::Log.info("ser nodes #{server_nodes}")
+#client_ips = []
+#server_nodes.each{|node|
+#  ip = getNodeIp node, ip_pre
+#  client_ips << ip if ip.start_with? ip_pre
+#}
+#client_ips = ServiceLib::getInnerIps node, server_nodes
+client_ips = getInnerIps "role:web_server"
 Chef::Log.info("client ips #{client_ips}")
 
 template '/etc/haproxy/haproxy.cfg' do

@@ -1,3 +1,4 @@
+extend MyCookbook::Helpers
 include_recipe "yum"
 
 yum_repo = yum_repository "Percona" do
@@ -58,13 +59,7 @@ ruby_block "config mysql" do
 end
 
 #create database and users
-server_nodes = search(:node, "role:web_server")
-Chef::Log.info("ser nodes #{server_nodes}")
-client_ips = []
-server_nodes.each{|node|
-  ip = ServiceLib.getNodeIp node, ip_pre
-  client_ips << ip if ip.start_with? ip_pre
-}
+client_ips = getInnerIps "role:web_server"
 
 #include_recipe "database::mysql"
 connection_params = {

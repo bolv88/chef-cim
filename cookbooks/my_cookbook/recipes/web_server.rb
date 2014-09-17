@@ -32,6 +32,14 @@ end
 package_fpm.run_action(:install)
 Chef::Log.info("after php-fpm run")
 
+ruby_block "enable php-fpm" do
+  block do
+    #start service
+    ServiceLib.enableService "/etc/init.d/php-fpm"
+  end
+  action :create
+end
+
 #nginx
 include_recipe "my_cookbook::nginx_server"
 

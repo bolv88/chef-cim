@@ -6,7 +6,7 @@ server_nodes.each{|node|
   ip = getNodeIp node, ip_pre
   client_ips << ip if ip.start_with? ip_pre
 }
-
+client_ips.sort!
 Chef::Log.info("client ips #{client_ips}")
 
 bash "run_on_haproxy_config_change" do
