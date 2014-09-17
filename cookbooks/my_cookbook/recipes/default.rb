@@ -75,4 +75,16 @@ node.default['sysctl']['params']=params
 include_recipe 'sysctl::apply'
 
 
-
+include_recipe "ulimit"
+ulimit_domain '*' do
+  rule do
+    item :nofile
+    type :hard
+    value 95535
+  end
+  rule do
+    item :nofile
+    type :soft
+    value 95535
+  end
+end
