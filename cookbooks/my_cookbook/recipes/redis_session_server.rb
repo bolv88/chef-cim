@@ -54,6 +54,7 @@ include_recipe "redisio::enable"
 
 #设置iptables
 client_ips = getInnerIps "role:web_server"
+client_ips << "10.171.62.83"
 
 execute "iptables_change" do
   command <<-EOS

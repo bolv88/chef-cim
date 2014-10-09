@@ -32,6 +32,20 @@ end
 package_fpm.run_action(:install)
 Chef::Log.info("after php-fpm run")
 
+template '/etc/php.ini' do
+  source "php-ini.erb"
+  notifies :run, 'execute[php_config_change]'
+end
+template '/etc/php-fpm.d/www.conf' do
+  source "php-fpm-www.erb"
+  notifies :run, 'execute[php_config_change]'
+end
+
+execute "php_config_change" do
+  command '/etc/init.d/php-fpm restart'
+  action :nothing
+end
+
 ruby_block "enable php-fpm" do
   block do
     #start service
