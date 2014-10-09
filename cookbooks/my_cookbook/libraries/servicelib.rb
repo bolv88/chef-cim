@@ -19,9 +19,10 @@ class Chef::Recipe
       Chef::Log.info("\e[1;36m #{command_pre} checking .... #{service_status.stdout} \e[0m")
       return true if (service_status.stdout.index "running") != nil and (service_status.stdout.index "not running") == nil
 
-      run_service = Mixlib::ShellOut.new("#{command_pre} start")
+      run_service = Mixlib::ShellOut.new("sudo #{command_pre} start")
       run_service.run_command
       Chef::Log.info("\e[1;36m #{command_pre} start \e[0m")
+      Chef::Log.info("\e[1;36m #{run_service.stdout} \e[0m")
     end
 
   end

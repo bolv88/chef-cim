@@ -38,11 +38,11 @@ tmp-table-size                 = 32M
 max-heap-table-size            = 32M
 query-cache-type               = 0
 query-cache-size               = 0
+table-open-cache               = 4000
 max-connections                = 2000
 thread-cache-size              = 100
 open-files-limit               = 65535
 table-definition-cache         = 1024
-table-open-cache               = 128
 
 # INNODB #
 innodb-flush-method            = O_DIRECT
@@ -50,7 +50,8 @@ innodb-log-files-in-group      = 2
 innodb-log-file-size           = 128M
 innodb-flush-log-at-trx-commit = 1
 innodb-file-per-table          = 1
-innodb-buffer-pool-size        = 1536M
+innodb-buffer-pool-size        = 3000M
+innodb-buffer-pool-instances   = 3
 
 # LOGGING #
 log-error                      = /data0/mysql/mysql-error.log
@@ -68,3 +69,7 @@ server-id = <%= @server_id %>
   <%- end %>
 <%- end %>
 
+#remove restart time
+innodb_buffer_pool_dump_at_shutdown = ON
+innodb_buffer_pool_load_at_startup  = ON
+back_log                        = 1000
