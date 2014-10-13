@@ -1,5 +1,5 @@
 server {
-    listen <%= @listen_ip%>:<%= @listen_port%>;
+    listen <%= @listen_ip%>:<%= @listen_port%> backlog=10000;
     server_name icloud.cim120.com.cn;
     root /data0/www/icloud.cim120.com.cn/current/public;
     index index.html index.php;

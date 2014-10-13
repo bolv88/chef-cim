@@ -25,6 +25,7 @@ net['ipv4']['tcp_rmem'] = "4096 87380 16777216"
 net['ipv4']['tcp_wmem'] = "4096 65536 16777216"
 
 # increase the length of the processor input queue
+net['core']['somaxconn'] = 30000
 net['core']['netdev_max_backlog'] = 30000
 
 # recommended default congestion control is htcp 
@@ -45,7 +46,6 @@ net['ipv4']['tcp_syncookies']=0
 net['ipv4']['tcp_no_metrics_save']=1
 
 #listen()的默认参数,挂起请求的最大数量.默认是128.对繁忙的服务器,增加该值有助于网络性能.可调整到256.
-net['core']['somaxconn'] = 1024
 
 #系统所能处理不属于任何进程的TCP sockets最大数量。假如超过这个数量﹐那么不属于任何进程的连接会被立即reset，并同时显示警告信息。之所以要设定这个限制﹐纯粹为了抵御那些简单的 DoS 攻击﹐千万不要依赖这个或是人为的降低这个限制(这个值Redhat AS版本中设置为32768,但是很多防火墙修改的时候,建议该值修改为2000)
 net['ipv4']['tcp_max_orphans'] = 262144
