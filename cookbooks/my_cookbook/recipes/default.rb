@@ -76,7 +76,7 @@ include_recipe 'sysctl::apply'
 
 
 include_recipe "ulimit"
-ulimit_domain '*' do
+ulimit_domain 'nginx' do
   rule do
     item :nofile
     type :hard
@@ -84,6 +84,16 @@ ulimit_domain '*' do
   end
   rule do
     item :nofile
+    type :soft
+    value 95535
+  end
+  rule do
+    item :nproc
+    type :hard
+    value 95535
+  end
+  rule do
+    item :nproc
     type :soft
     value 95535
   end

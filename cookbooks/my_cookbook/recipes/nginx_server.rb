@@ -9,6 +9,11 @@ end
 ip_pre = node['my_cookbook']['inner_ip_pre']
 listen_ip = getNodeIp node,ip_pre
 
+template '/etc/nginx/nginx.conf' do
+  source "nginx.erb"
+  notifies :run, 'execute[nginx_config_change]'
+end
+
 template '/etc/nginx/conf.d/virtual.conf' do
   source "nginx_config_virtual.erb"
   variables(
@@ -20,7 +25,7 @@ template '/etc/nginx/conf.d/virtual.conf' do
 end
 
 execute "nginx_config_change" do
-  command '/etc/init.d/nginx reload'
+  command '/etc/init.d/nginx restart'
   action :nothing
 end
 
